@@ -1,3 +1,0 @@
-com.example.avatarrobot.test
-style WhiteBackgroundDialogTheme
-style WhiteBackgroundTheme
