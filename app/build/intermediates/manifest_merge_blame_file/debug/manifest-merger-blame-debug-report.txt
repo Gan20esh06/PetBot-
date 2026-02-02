@@ -1,0 +1,179 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.avatarrobot"
+4    android:installLocation="preferExternal"
+5    android:versionCode="1"
+6    android:versionName="1.0" >
+7
+8    <uses-sdk
+9        android:minSdkVersion="23"
+10        android:targetSdkVersion="34" />
+11
+12    <!-- Permissions -->
+13    <uses-permission android:name="android.permission.INTERNET" />
+13-->D:\CBP\app\src\main\AndroidManifest.xml:6:5-67
+13-->D:\CBP\app\src\main\AndroidManifest.xml:6:22-64
+14    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+14-->D:\CBP\app\src\main\AndroidManifest.xml:7:5-71
+14-->D:\CBP\app\src\main\AndroidManifest.xml:7:22-68
+15    <uses-permission android:name="android.permission.CAMERA" />
+15-->D:\CBP\app\src\main\AndroidManifest.xml:8:5-65
+15-->D:\CBP\app\src\main\AndroidManifest.xml:8:22-62
+16    <uses-permission android:name="android.permission.BLUETOOTH" />
+16-->D:\CBP\app\src\main\AndroidManifest.xml:9:5-68
+16-->D:\CBP\app\src\main\AndroidManifest.xml:9:22-65
+17    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+17-->D:\CBP\app\src\main\AndroidManifest.xml:10:5-74
+17-->D:\CBP\app\src\main\AndroidManifest.xml:10:22-71
+18    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+18-->D:\CBP\app\src\main\AndroidManifest.xml:11:5-76
+18-->D:\CBP\app\src\main\AndroidManifest.xml:11:22-73
+19    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+19-->D:\CBP\app\src\main\AndroidManifest.xml:12:5-73
+19-->D:\CBP\app\src\main\AndroidManifest.xml:12:22-70
+20    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+20-->D:\CBP\app\src\main\AndroidManifest.xml:13:5-79
+20-->D:\CBP\app\src\main\AndroidManifest.xml:13:22-76
+21    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+21-->D:\CBP\app\src\main\AndroidManifest.xml:14:5-81
+21-->D:\CBP\app\src\main\AndroidManifest.xml:14:22-78
+22
+23    <uses-feature
+23-->D:\CBP\app\src\main\AndroidManifest.xml:16:5-85
+24        android:name="android.hardware.camera"
+24-->D:\CBP\app\src\main\AndroidManifest.xml:16:19-57
+25        android:required="false" />
+25-->D:\CBP\app\src\main\AndroidManifest.xml:16:58-82
+26    <uses-feature
+26-->D:\CBP\app\src\main\AndroidManifest.xml:17:5-95
+27        android:name="android.hardware.camera.autofocus"
+27-->D:\CBP\app\src\main\AndroidManifest.xml:17:19-67
+28        android:required="false" />
+28-->D:\CBP\app\src\main\AndroidManifest.xml:17:68-92
+29    <uses-feature
+29-->D:\CBP\app\src\main\AndroidManifest.xml:18:5-90
+30        android:name="android.hardware.bluetooth_le"
+30-->D:\CBP\app\src\main\AndroidManifest.xml:18:19-63
+31        android:required="true" />
+31-->D:\CBP\app\src\main\AndroidManifest.xml:18:64-87
+32
+33    <permission
+33-->[androidx.core:core:1.12.0] C:\Users\gani4\.gradle\caches\transforms-3\9643920afc401bf92410edb017e2095b\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
+34        android:name="com.example.avatarrobot.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+34-->[androidx.core:core:1.12.0] C:\Users\gani4\.gradle\caches\transforms-3\9643920afc401bf92410edb017e2095b\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
+35        android:protectionLevel="signature" />
+35-->[androidx.core:core:1.12.0] C:\Users\gani4\.gradle\caches\transforms-3\9643920afc401bf92410edb017e2095b\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+36
+37    <uses-permission android:name="com.example.avatarrobot.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+37-->[androidx.core:core:1.12.0] C:\Users\gani4\.gradle\caches\transforms-3\9643920afc401bf92410edb017e2095b\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
+37-->[androidx.core:core:1.12.0] C:\Users\gani4\.gradle\caches\transforms-3\9643920afc401bf92410edb017e2095b\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
+38
+39    <application
+39-->D:\CBP\app\src\main\AndroidManifest.xml:20:5-38:19
+40        android:allowBackup="true"
+40-->D:\CBP\app\src\main\AndroidManifest.xml:21:9-35
+41        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+41-->[androidx.core:core:1.12.0] C:\Users\gani4\.gradle\caches\transforms-3\9643920afc401bf92410edb017e2095b\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
+42        android:debuggable="true"
+43        android:extractNativeLibs="false"
+44        android:icon="@android:drawable/ic_dialog_info"
+44-->D:\CBP\app\src\main\AndroidManifest.xml:22:9-56
+45        android:label="@string/app_name"
+45-->D:\CBP\app\src\main\AndroidManifest.xml:23:9-41
+46        android:roundIcon="@android:drawable/ic_dialog_info"
+46-->D:\CBP\app\src\main\AndroidManifest.xml:24:9-61
+47        android:supportsRtl="true"
+47-->D:\CBP\app\src\main\AndroidManifest.xml:25:9-35
+48        android:testOnly="true"
+49        android:theme="@style/Theme.AvatarRobot"
+49-->D:\CBP\app\src\main\AndroidManifest.xml:26:9-49
+50        android:usesCleartextTraffic="true" >
+50-->D:\CBP\app\src\main\AndroidManifest.xml:27:9-44
+51        <activity
+51-->D:\CBP\app\src\main\AndroidManifest.xml:29:9-37:20
+52            android:name="com.example.avatarrobot.MainActivity"
+52-->D:\CBP\app\src\main\AndroidManifest.xml:30:13-41
+53            android:exported="true"
+53-->D:\CBP\app\src\main\AndroidManifest.xml:32:13-36
+54            android:screenOrientation="landscape" >
+54-->D:\CBP\app\src\main\AndroidManifest.xml:31:13-50
+55            <intent-filter>
+55-->D:\CBP\app\src\main\AndroidManifest.xml:33:13-36:29
+56                <action android:name="android.intent.action.MAIN" />
+56-->D:\CBP\app\src\main\AndroidManifest.xml:34:17-69
+56-->D:\CBP\app\src\main\AndroidManifest.xml:34:25-66
+57
+58                <category android:name="android.intent.category.LAUNCHER" />
+58-->D:\CBP\app\src\main\AndroidManifest.xml:35:17-77
+58-->D:\CBP\app\src\main\AndroidManifest.xml:35:27-74
+59            </intent-filter>
+60        </activity>
+61
+62        <provider
+62-->[androidx.emoji2:emoji2:1.2.0] C:\Users\gani4\.gradle\caches\transforms-3\a47287aa1a4f72e566c4fd5b707075b7\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+63            android:name="androidx.startup.InitializationProvider"
+63-->[androidx.emoji2:emoji2:1.2.0] C:\Users\gani4\.gradle\caches\transforms-3\a47287aa1a4f72e566c4fd5b707075b7\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+64            android:authorities="com.example.avatarrobot.androidx-startup"
+64-->[androidx.emoji2:emoji2:1.2.0] C:\Users\gani4\.gradle\caches\transforms-3\a47287aa1a4f72e566c4fd5b707075b7\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+65            android:exported="false" >
+65-->[androidx.emoji2:emoji2:1.2.0] C:\Users\gani4\.gradle\caches\transforms-3\a47287aa1a4f72e566c4fd5b707075b7\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+66            <meta-data
+66-->[androidx.emoji2:emoji2:1.2.0] C:\Users\gani4\.gradle\caches\transforms-3\a47287aa1a4f72e566c4fd5b707075b7\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+67                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+67-->[androidx.emoji2:emoji2:1.2.0] C:\Users\gani4\.gradle\caches\transforms-3\a47287aa1a4f72e566c4fd5b707075b7\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+68                android:value="androidx.startup" />
+68-->[androidx.emoji2:emoji2:1.2.0] C:\Users\gani4\.gradle\caches\transforms-3\a47287aa1a4f72e566c4fd5b707075b7\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+69            <meta-data
+69-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\gani4\.gradle\caches\transforms-3\0f1a0f4fef6e145f404b8deb3bebc49f\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:29:13-31:52
+70                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+70-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\gani4\.gradle\caches\transforms-3\0f1a0f4fef6e145f404b8deb3bebc49f\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:30:17-78
+71                android:value="androidx.startup" />
+71-->[androidx.lifecycle:lifecycle-process:2.6.1] C:\Users\gani4\.gradle\caches\transforms-3\0f1a0f4fef6e145f404b8deb3bebc49f\transformed\lifecycle-process-2.6.1\AndroidManifest.xml:31:17-49
+72            <meta-data
+72-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
+73                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+73-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
+74                android:value="androidx.startup" />
+74-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
+75        </provider>
+76
+77        <receiver
+77-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
+78            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+78-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
+79            android:directBootAware="false"
+79-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
+80            android:enabled="true"
+80-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
+81            android:exported="true"
+81-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
+82            android:permission="android.permission.DUMP" >
+82-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
+83            <intent-filter>
+83-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
+84                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+84-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
+84-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
+85            </intent-filter>
+86            <intent-filter>
+86-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
+87                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+87-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
+87-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
+88            </intent-filter>
+89            <intent-filter>
+89-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
+90                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+90-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
+90-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
+91            </intent-filter>
+92            <intent-filter>
+92-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
+93                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+93-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
+93-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\gani4\.gradle\caches\transforms-3\d0526cdf04d2c3a3fda2a06989b48e7c\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
+94            </intent-filter>
+95        </receiver>
+96    </application>
+97
+98</manifest>

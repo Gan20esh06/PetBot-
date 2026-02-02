@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Object Detection View</title>
+
+    <!-- TensorFlow.js and COCO-SSD -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.11.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3"></script>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          #0f0f23 0%,
+          #1a1a3e 50%,
+          #0f0f23 100%
+        );
+        color: white;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+      }
+
+      h1 {
+        margin: 20px 0;
+        font-size: 2em;
+        text-align: center;
+        text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+      }
+
+      .controls {
+        margin: 20px 0;
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      button {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      button.stop {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+      }
+
+      .camera-container {
+        position: relative;
+        max-width: 100%;
+        margin: 20px 0;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      }
+
+      #videoElement {
+        display: block;
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+        background: #000;
+      }
+
+      #canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      .info-panel {
+        background: rgba(26, 26, 62, 0.8);
+        border-radius: 15px;
+        padding: 20px;
+        max-width: 800px;
+        width: 100%;
+        margin: 20px 0;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+      }
+
+      .status {
+        font-size: 1.2em;
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 8px;
+        background: rgba(59, 130, 246, 0.2);
+      }
+
+      .status.loading {
+        background: rgba(251, 191, 36, 0.2);
+        color: #fbbf24;
+      }
+
+      .status.active {
+        background: rgba(34, 197, 94, 0.2);
+        color: #22c55e;
+      }
+
+      .status.error {
+        background: rgba(239, 68, 68, 0.2);
+        color: #ef4444;
+      }
+
+      .detection-list {
+        margin-top: 15px;
+      }
+
+      .detection-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 12px;
+        margin: 5px 0;
+        background: rgba(59, 130, 246, 0.1);
+        border-radius: 6px;
+        border-left: 3px solid #3b82f6;
+      }
+
+      .detection-item .object-name {
+        font-weight: bold;
+        text-transform: capitalize;
+      }
+
+      .detection-item .confidence {
+        color: #22c55e;
+        font-size: 0.9em;
+      }
+
+      .fps-counter {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-weight: bold;
+        color: #22c55e;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🤖 AI Object Detection</h1>
+
+    <div class="controls">
+      <button id="startBtn">📷 Start Camera</button>
+      <button id="stopBtn" class="stop hidden">⏹️ Stop</button>
+      <button id="switchBtn" class="hidden">🔄 Switch Camera</button>
+    </div>
+
+    <div class="camera-container" id="cameraContainer" style="display: none">
+      <video id="videoElement" autoplay playsinline muted></video>
+      <canvas id="canvas"></canvas>
+      <div class="fps-counter" id="fpsCounter">FPS: 0</div>
+    </div>
+
+    <div class="info-panel">
+      <div class="status" id="status">
+        Click "Start Camera" to begin detection
+      </div>
+
+      <div class="detection-list">
+        <h3>📦 Detected Objects:</h3>
+        <div id="detectionList">
+          <p style="text-align: center; color: #6b7280; margin-top: 10px">
+            No objects detected yet
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // DOM Elements
+      const videoElement = document.getElementById("videoElement");
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const startBtn = document.getElementById("startBtn");
+      const stopBtn = document.getElementById("stopBtn");
+      const switchBtn = document.getElementById("switchBtn");
+      const status = document.getElementById("status");
+      const detectionList = document.getElementById("detectionList");
+      const cameraContainer = document.getElementById("cameraContainer");
+      const fpsCounter = document.getElementById("fpsCounter");
+
+      // State
+      let model = null;
+      let stream = null;
+      let animationId = null;
+      let facingMode = "environment"; // Start with back camera
+      let lastFrameTime = Date.now();
+      let fps = 0;
+
+      // Initialize
+      async function init() {
+        try {
+          status.textContent = "⏳ Loading AI model...";
+          status.className = "status loading";
+
+          model = await cocoSsd.load();
+
+          status.textContent = '✅ Model loaded! Click "Start Camera" to begin';
+          status.className = "status";
+
+          console.log("✅ COCO-SSD model loaded successfully");
+        } catch (error) {
+          status.textContent = "❌ Failed to load model: " + error.message;
+          status.className = "status error";
+          console.error("Model loading error:", error);
+        }
+      }
+
+      // Start camera
+      async function startCamera() {
+        try {
+          status.textContent = "📷 Starting camera...";
+          status.className = "status loading";
+
+          stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+              facingMode: facingMode,
+              width: { ideal: 1280 },
+              height: { ideal: 720 },
+            },
+          });
+
+          videoElement.srcObject = stream;
+
+          await new Promise((resolve) => {
+            videoElement.onloadedmetadata = () => {
+              // Set canvas size to match video
+              canvas.width = videoElement.videoWidth;
+              canvas.height = videoElement.videoHeight;
+              resolve();
+            };
+          });
+
+          cameraContainer.style.display = "block";
+          startBtn.classList.add("hidden");
+          stopBtn.classList.remove("hidden");
+          switchBtn.classList.remove("hidden");
+
+          status.textContent = "🔍 Detecting objects...";
+          status.className = "status active";
+
+          // Start detection loop
+          detectFrame();
+
+          console.log("✅ Camera started");
+        } catch (error) {
+          status.textContent = "❌ Camera error: " + error.message;
+          status.className = "status error";
+          console.error("Camera error:", error);
+        }
+      }
+
+      // Stop camera
+      function stopCamera() {
+        if (stream) {
+          stream.getTracks().forEach((track) => track.stop());
+          stream = null;
+        }
+
+        if (animationId) {
+          cancelAnimationFrame(animationId);
+          animationId = null;
+        }
+
+        videoElement.srcObject = null;
+        cameraContainer.style.display = "none";
+        startBtn.classList.remove("hidden");
+        stopBtn.classList.add("hidden");
+        switchBtn.classList.add("hidden");
+
+        status.textContent = "📷 Camera stopped";
+        status.className = "status";
+
+        detectionList.innerHTML =
+          '<p style="text-align: center; color: #6b7280; margin-top: 10px;">No objects detected yet</p>';
+
+        console.log("📷 Camera stopped");
+      }
+
+      // Switch camera
+      async function switchCamera() {
+        facingMode = facingMode === "environment" ? "user" : "environment";
+        stopCamera();
+        await startCamera();
+      }
+
+      // Detection loop
+      async function detectFrame() {
+        if (!model || !videoElement || videoElement.readyState !== 4) {
+          animationId = requestAnimationFrame(detectFrame);
+          return;
+        }
+
+        try {
+          // Detect objects
+          const predictions = await model.detect(videoElement);
+
+          // Calculate FPS
+          const now = Date.now();
+          fps = Math.round(1000 / (now - lastFrameTime));
+          lastFrameTime = now;
+          fpsCounter.textContent = `FPS: ${fps}`;
+
+          // Clear canvas
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          // Draw bounding boxes
+          ctx.font = "18px Arial";
+          ctx.lineWidth = 3;
+
+          const detectedObjects = [];
+
+          predictions.forEach((prediction) => {
+            if (prediction.score > 0.5) {
+              // 50% confidence threshold
+              const [x, y, width, height] = prediction.bbox;
+
+              // Draw bounding box
+              ctx.strokeStyle = "#3b82f6";
+              ctx.fillStyle = "#3b82f6";
+              ctx.strokeRect(x, y, width, height);
+
+              // Draw label background
+              const label = `${prediction.class} ${Math.round(
+                prediction.score * 100
+              )}%`;
+              const textWidth = ctx.measureText(label).width;
+              ctx.fillRect(x, y - 25, textWidth + 10, 25);
+
+              // Draw label text
+              ctx.fillStyle = "white";
+              ctx.fillText(label, x + 5, y - 7);
+
+              // Add to list
+              detectedObjects.push({
+                class: prediction.class,
+                confidence: (prediction.score * 100).toFixed(0),
+              });
+
+              // Log to console
+              console.log(
+                `🔍 Detected: ${prediction.class} (${(
+                  prediction.score * 100
+                ).toFixed(0)}%) at [${Math.round(x)}, ${Math.round(y)}]`
+              );
+            }
+          });
+
+          // Update detection list
+          if (detectedObjects.length > 0) {
+            detectionList.innerHTML = detectedObjects
+              .map(
+                (obj) => `
+                        <div class="detection-item">
+                            <span class="object-name">${obj.class}</span>
+                            <span class="confidence">${obj.confidence}%</span>
+                        </div>
+                    `
+              )
+              .join("");
+          } else {
+            detectionList.innerHTML =
+              '<p style="text-align: center; color: #6b7280; margin-top: 10px;">No objects detected</p>';
+          }
+        } catch (error) {
+          console.error("Detection error:", error);
+        }
+
+        animationId = requestAnimationFrame(detectFrame);
+      }
+
+      // Event listeners
+      startBtn.addEventListener("click", startCamera);
+      stopBtn.addEventListener("click", stopCamera);
+      switchBtn.addEventListener("click", switchCamera);
+
+      // Initialize on load
+      init();
+    </script>
+  </body>
+</html>
